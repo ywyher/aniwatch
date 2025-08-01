@@ -1720,7 +1720,7 @@ var MegaCloud = class {
       throw err;
     }
   }
-  async extract4(embedIframeURL) {
+  async extract4(embedIframeURL, category) {
     const extractedData = {
       tracks: [],
       intro: {
@@ -1735,7 +1735,7 @@ var MegaCloud = class {
     };
     const epId = embedIframeURL.split("?ep=")[1];
     const iframe = await fetch(
-      `https://megaplay.buzz/stream/s-2/${epId}/sub`,
+      `https://megaplay.buzz/stream/s-2/${epId}/${category}`,
       {
         headers: {
           Host: "megaplay.buzz",
@@ -1876,7 +1876,7 @@ async function _getAnimeEpisodeSources(episodeId, server = "hd-1" /* VidStreamin
         case "hd-2" /* VidCloud */: {
           return {
             headers: { Referer: `https://megaplay.buzz/stream/s-2/${episodeId}/${category}` },
-            ...await new megacloud_default().extract4(episodeId)
+            ...await new megacloud_default().extract4(episodeId, category)
           };
         }
         case "streamsb" /* StreamSB */: {
